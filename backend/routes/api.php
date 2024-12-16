@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +17,14 @@ use App\Http\Controllers\CustomerController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+//サンプルリスト取得
 Route::get('list', [ListController::class, 'index']);
+//利用者リスト取得
 Route::get('customer', [LoginController::class, 'index']);
 // GETリクエストを処理するルート例
-Route::get('/customerlogin', [CustomerController::class, 'index']);
+Route::get('loginlist', [CustomerController::class, 'index']);
 // POSTリクエストを処理するルート例
-Route::post('/login', [CustomerController::class, 'login']);
+Route::post('login', [AuthController::class, 'login']);
 
 
 

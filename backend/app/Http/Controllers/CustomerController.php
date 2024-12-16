@@ -16,7 +16,7 @@ class CustomerController extends Controller
     }
 
     // ログイン認証処理
-    public function login(Request $request)
+    public function store(Request $request)
     {
         // 入力されたメールアドレスとパスワードを使って認証
         $customer = Customer::where('email', $request->email)->first(); // メールアドレスで顧客を検索
