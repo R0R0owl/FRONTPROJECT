@@ -36,7 +36,7 @@ function Login() {
             setErrorMessage('');  // エラーをリセット
             navigate('/main');  // ログイン成功で '/main' に遷移
         } catch (error) {
-            setErrorMessage(ERROR_MESSAGES.invalidCredentials);  // 認証失敗
+            setErrorMessage(ERROR_MESSAGES.invalidCredentials);  // 認証失敗エラー
         }
     };
 

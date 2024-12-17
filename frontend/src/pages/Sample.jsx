@@ -6,7 +6,7 @@ function Sample() {
   const [value, setValue] = useState([]);
 
   // 先ほど作成したLaravelのAPIのURL
-  const url = "http://localhost:8000/api/list";
+  const url = "http://127.0.0.1:8000/api/list";
 
   useEffect(() => {
     (async () => {

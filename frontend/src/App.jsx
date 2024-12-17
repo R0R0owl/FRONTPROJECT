@@ -6,6 +6,7 @@ import { useRoutes } from "react-router-dom";
 import Login from "./pages/Login";
 import Sample from "./pages/Sample";
 import Main from "./pages/Main";
+import Register from "./pages/Register";
 
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
     { path: "/", element: <Sample /> },
     { path: "/login", element: <Login /> },
     { path: "/main", element: <Main /> },
+    { path: "/register", element: <Register /> },
 
 
     //エラーぺージ
