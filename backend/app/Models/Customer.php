@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
 class Customer extends Model
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -32,4 +33,6 @@ class Customer extends Model
         'updated_at',
         'remember_token',
     ];
+
+
 }
