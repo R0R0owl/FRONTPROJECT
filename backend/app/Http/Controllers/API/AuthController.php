@@ -10,25 +10,29 @@ use Validator;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
+    public function register(Request $request)
+    {
+
+        return $request->all();
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:user,email',
             'password' =>  'required|min:8',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                'validation_errors'=>$validator->messages(),
+                'validation_errors' => $validator->messages(),
             ]);
         } else {
             $user = Customer::create([
-                'name'=> $request->name,
+                'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
 
-            $token = $user->createToken($user->email.'_Token')->plainTextToken;
+            $token = $user->createToken($user->email . '_Token')->plainTextToken;
 
             return response()->json([
                 'status' => 200,
@@ -39,7 +43,8 @@ class AuthController extends Controller
         }
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         // return $request->all()
 
         $validator = Validator::make($request->all(), [
@@ -47,9 +52,9 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                'validation_errors'=>$validator->messages(),
+                'validation_errors' => $validator->messages(),
             ]);
         } else {
             $user = Customer::where('email', $request->email)->first();
@@ -59,11 +64,11 @@ class AuthController extends Controller
                     'message' => '入力情報が不正です。',
                 ]);
             } else {
-                $token = $user->createToken($user->email.'_Token')->plainTextToken;
+                $token = $user->createToken($user->email . '_Token')->plainTextToken;
 
                 return response()->json([
-                    'status'=>200,
-                    'username'=>$user->name,
+                    'status' => 200,
+                    'username' => $user->name,
                     'token' => $token,
                     'message' => 'ログインに成功しました。'
                 ]);
@@ -71,7 +76,8 @@ class AuthController extends Controller
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         auth()->user()->tokens()->delete();
         return response()->json([
             'status' => 200,

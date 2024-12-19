@@ -44,34 +44,6 @@ function Login() {
         });
     }
 
-
-    
-
-    // // ログインフォームの送信処理
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();  // ページのリロードを防止
-        
-    //     // メールアドレスの簡易バリデーション
-    //     if (!email.includes('@')) {
-    //         setErrorMessage(ERROR_MESSAGES.invalidEmail);
-    //         return;
-    //     }
-
-    //     try {
-    //         const res = await axios.post('http://127.0.0.1:8000/api/login', { email, password });
-
-    //         // レスポンスからトークンを取得し、ローカルストレージに保存
-    //         if (res.data.token) {
-    //             localStorage.setItem('authToken', res.data.token);  // トークンをローカルストレージに保存
-    //         }
-
-    //         setErrorMessage('');  // エラーをリセット
-    //         navigate('/main');  // ログイン成功で '/main' に遷移
-    //     } catch (error) {
-    //         setErrorMessage(ERROR_MESSAGES.invalidCredentials);  // 認証失敗エラー
-    //     }
-    // };
-
     return (
         <main>
             <div className="new-title-section">
