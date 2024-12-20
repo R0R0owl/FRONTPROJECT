@@ -12,17 +12,15 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-
-        return $request->all();
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:user,email',
+            'email' => 'required|email|max:255|unique:users,email',
             'password' =>  'required|min:8',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
+                'status' => 422,
                 'validation_errors' => $validator->messages(),
             ]);
         } else {
@@ -41,6 +39,14 @@ class AuthController extends Controller
                 'message' => 'Registerd Successfully'
             ]);
         }
+
+        // パスワードと確認用パスワードの比較
+        if ($request->password !== $request->password_confirmation) {
+            return response()->json([
+                'status' => 422,
+                'validation_errors' => ['password_confirmation' => 'パスワードと確認用パスワードが一致しません。'],
+            ]);
+        }        
     }
 
     public function login(Request $request)

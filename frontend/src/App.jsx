@@ -7,6 +7,9 @@ import Login from "./pages/Login";
 import Sample from "./pages/Sample";
 import Main from "./pages/Main";
 import Register from "./pages/Register";
+import Greatlist from "./pages/Greatlist";
+import Greatdata from "./pages/Greatdata";
+import Greatdetail from "./pages/Greatdetail";
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -27,6 +30,9 @@ const App = () => {
     { path: "/login", element: <Login /> },
     { path: "/main", element: <Main /> },
     { path: "/register", element: <Register /> },
+    { path: "/greatlist", element: <Greatlist /> },
+    { path: "/greatdata/:eraId", element: <Greatdata /> },
+    { path: "/greatdetail/:eraId/:personId", element: <Greatdetail /> },
 
 
     //エラーぺージ

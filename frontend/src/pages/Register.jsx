@@ -12,8 +12,8 @@ function Register() {
         name: '',
         email: '',
         password: '',
-        passwordconfirm: '',
-        error_list: {}, // 空オブジェクトに変更
+        // passwordconfirm: '',
+        error_list: [], // 空オブジェクトに変更
     });
 
     const handleInput = (e) => {
@@ -37,7 +37,7 @@ function Register() {
                     swal("Success", res.data.message, "success");
                     navigate("/main");
                 } else {
-                    setRegister({ ...registerInput, error_list: res.data.validation_errors });
+                    setRegister({...registerInput, error_list: res.data.validation_errors});
                 }
             });
         });
@@ -68,7 +68,7 @@ function Register() {
                                 className="form-control"
                                 required
                             /><br />
-                            <span>{registerInput.error_list.name || ""}</span>
+                            <span>{registerInput.error_list.name}</span>
                         </div>
                         <div className="tourokujouhou">
                             <label htmlFor="email" id="touroku-mail">メールアドレス</label><br />
@@ -96,7 +96,7 @@ function Register() {
                             /><br />
                             <span>{registerInput.error_list.password}</span>
                         </div>
-                        <div className="tourokujouhou">
+                        {/* <div className="tourokujouhou">
                             <label htmlFor="confirmPassword" id="kakunin-pass">パスワード(確認)</label><br />
                             <input
                                 type="password"
@@ -108,7 +108,7 @@ function Register() {
                                 required
                             /><br />
                             <span>{registerInput.error_list.passwordconfirm}</span>
-                        </div>
+                        </div> */}
 
                         <div className="touroku">
                             <button type="submit" id="touroku">新規作成</button>
