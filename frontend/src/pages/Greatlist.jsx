@@ -1,13 +1,24 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { use } from 'react';
 import { Link } from 'react-router-dom';
 
-const eras = [
-    { id: 1, name: '古墳時代', progress: '☑' },
-    { id: 2, name: '奈良時代', progress: '60%' },
-    { id: 3, name: '安土・桃山時代', progress: '40%' }
-];
+function Period() {
+    const [value, setValue] = useState([]);
 
-const EraList = () => {
+    const url = "http://127.0.0.1:8000/api/periods";
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await axios.get(url);
+                setValue(res.data.post);
+            } catch (e) {
+                console.error(e);
+            }
+        })();
+    }, []);
+
     return (
         <section className="ijin-list">
             <div className="page-title">
@@ -18,16 +29,13 @@ const EraList = () => {
                 </div>
                 <h2 id="page-title">偉人検索</h2>
             </div>
-            {eras.map((era) => (
-                <div key={era.id} className={`era-item era-${era.id}`}>
-                    <div className="era-progress">
-                        <p>{era.progress}</p>
+            {value.map((article) => (
+                <div key={article.id} className={`era-item era-${article.id}`}>
+                    <div className='era-name'>
+                        <p>{article.name}</p>
                     </div>
-                    <div className="era-name">
-                        <p>{era.name}</p>
-                    </div>
-                    <div className="era-arrow">
-                        <Link to={`/greatdata/${era.id}`} className='next-link'>
+                    <div className='era-arrow'>
+                        <Link to={`/greatdata/${article.id}`} className='next-link'>
                             <p>&gt;</p>
                         </Link>
                     </div>
@@ -35,6 +43,6 @@ const EraList = () => {
             ))}
         </section>
     );
-};
+}
 
-export default EraList;
+export default Period;
