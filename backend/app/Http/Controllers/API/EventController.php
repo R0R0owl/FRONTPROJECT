@@ -12,12 +12,13 @@ class EventController extends Controller
     {
         $events = Events::all();
 
-        return response()->json(['events' => $events], 200, [], JSON_UNESCAPED_UNICODE);
+        return response()->json(['post' => $events])
+        ->header('Content-Type', 'application/json; charset=utf-8');
     }
 
-    public function getevents(Request $request) {
-        $greatID = $request->query('great_id');
-        $data = Events::where('great_id', $greatID)->get();
+    public function getEvents(Request $request) {
+        $greatId = $request->query('great_id');
+        $data = Events::where('great_id', $greatId)->get();
 
         return response()->json(['post' => $data]);
     }

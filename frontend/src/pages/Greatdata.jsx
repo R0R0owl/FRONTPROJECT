@@ -12,12 +12,13 @@ const Greatdata = () => {
         (async () => {
             try {
                 const response = await axios.get(url);
-                setPersons(response.data.post); // データをセット
+                setPersons(response.data.post);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         })();
     }, [eraId]); // eraIdが変更されたときに再実行
+    console.log("Persons data:", persons);
 
     return (
         <section className="person-data">

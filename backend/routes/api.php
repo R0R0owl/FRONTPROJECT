@@ -29,4 +29,4 @@ Route::get('/greatmanageds', [GreatmanagedController::class, 'index']);
 Route::get('/greatmanaged', [GreatManagedController::class, 'getGreatManaged']);
 
 Route::get('/events', [EventController::class, 'index']);
-Route::get('/event', [EventController::class, 'getevents']);
+Route::get('/event', [EventController::class, 'getEvents']);

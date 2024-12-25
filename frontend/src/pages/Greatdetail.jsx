@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, data } from 'react-router-dom';
 import axios from 'axios';
-import { use } from 'react';
 
 // 偉人詳細データ
-const greatdetail = () => {
-    const { eraId } = useParams();  // URLからeraIdとpersonIdを取得
+const GreatDetail = () => {
+    const { eraId } = useParams();
     const [persons, setPersons] = useState([]);
 
-    const url = `http://127.0.0.1:8000/api/events?great_id=${eraId}`;
+    const url = `http://127.0.0.1:8000/api/event?great_id=${eraId}`;
 
     useEffect(() => {
         (async () => {
             try {
                 const response = await axios.get(url);
-                setPersons(response.data.post);
+                if (Array.isArray(response.data.post)) {
+                    setPersons(response.data.post);
+                } else {
+                    setPersons([]);
+                }
             } catch (error) {
                 console.log("Error fetching data:", error);
+                setPersons([]);
             }
         })();
-    }), [eraId];
+    }, [eraId]);
+    console.log("Persons data:", persons);
 
 
     return (
@@ -34,43 +39,39 @@ const greatdetail = () => {
                     <h2 id="page-title">イベント一覧</h2>
                 </div>
 
-                {persons.length === 0 ? (
-                    <p>この偉人情報はありません</p>
-                ) : (
-                    persons.map((person) => (
-                        <div className="syousai-jouhou">
-                            <div className="ijin-image">
-                                <img src={person.imageUrl} alt={`${person.name}の画像`} />
-                            </div>
-                            <div className="ijin-description">
-                                <p>{person.description}</p>
-                            </div>
-                        </div>
-                    ))
-                )}
+                {persons.length > 0 ? (
+                    <>
+                        {persons.map((person) => (
+                            <div key={person.id}>
+                                <div className="syousai-jouhou">
+                                    <div className="ijin-image">
+                                        <img src={person.imageUrl} alt={`${person.name}の画像`} />
+                                    </div>
+                                    <div className="ijin-description">
+                                        <p>{person.description}</p>
+                                    </div>
+                                </div>
 
-
-                {persons.length === 0 ? (
-                    <p>イベント情報はありません</p>
-                ) : (
-                    persons.map((person) => (
-                        <div className="nenpyou-itiran">
-                            <div className={`nenpyou${index + 1}`}>
-                                <div className="clear-mark">{person.year === '1534年' ? '★' : ''}</div>
-                                <div className="event">{person.year} {person.event}</div>
-                                <div className="nenpyou-yajirusi">
-                                    <Link to="/map" >
-                                        <p>&gt;</p>
-                                    </Link>
+                                <div className="nenpyou-itiran">
+                                    <div className={`nenpyou`}>
+                                        <div className="clear-mark">{person.year === '1534年' ? '★' : ''}</div>
+                                        <div className="event">{person.year} {person.event}</div>
+                                        <div className="nenpyou-yajirusi">
+                                            <Link to="/map">
+                                                <p>&gt;</p>
+                                            </Link>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                     </div>
-                    ))
+                        ))}
+                    </>
+                ) : (
+                    <p>データが存在しません。</p>
                 )}
-
             </section>
-        </main>   
+        </main>
     );
 };
 
-export default greatdetail;
+export default GreatDetail;

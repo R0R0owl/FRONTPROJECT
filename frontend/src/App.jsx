@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import axios from "axios";
 import { useRoutes } from "react-router-dom";
 
@@ -21,9 +21,8 @@ axios.interceptors.request.use(function(config){
   return config;
 });
 
-
 const App = () => {
-  
+
   //useRouteでルート設定
   const routes = [
     { path: "/", element: <Sample /> },
@@ -34,9 +33,8 @@ const App = () => {
     { path: "/greatdata/:eraId", element: <Greatdata /> },
     { path: "/greatdetail/:eraId/:personId", element: <Greatdetail /> },
 
-
     //エラーぺージ
-    { path: "*", elemnt: <div>ページが見つかりません</div> }
+    { path: "*", element: <div>ページが見つかりません</div> }
   ];
 
   const routing = useRoutes(routes); //useRoutesを使ってルーティング設定
