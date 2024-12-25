@@ -21,5 +21,4 @@ class GreatmanagedController extends Controller
     
         return response()->json(['post' => $data]);
     }
-    
 }

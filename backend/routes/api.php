@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PeriodController;
 use App\Http\Controllers\API\GreatmanagedController;
+use App\Http\Controllers\API\EventController;
 
 //ログインに必要なapi => register login logout
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -24,5 +25,8 @@ Route::get('list',[ListController::class, 'index']);
 Route::get('customer', [CustomerController::class, 'index']);
 
 Route::get('/periods', [PeriodController::class, 'index']);
-Route::get('/greatmanaged', [GreatmanagedController::class, 'index']);
+Route::get('/greatmanageds', [GreatmanagedController::class, 'index']);
 Route::get('/greatmanaged', [GreatManagedController::class, 'getGreatManaged']);
+
+Route::get('/events', [EventController::class, 'index']);
+Route::get('/event', [EventController::class, 'getevents']);
