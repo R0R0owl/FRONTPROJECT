@@ -20,9 +20,9 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('logout', [AuthController::class, 'logout']);
 });
 
-Route::get('list',[ListController::class, 'index']);
+Route::get('/list',[ListController::class, 'index']);
 // GETリクエストを処理するルート例
-Route::get('customer', [CustomerController::class, 'index']);
+Route::get('/customer', [CustomerController::class, 'index']);
 
 Route::get('/periods', [PeriodController::class, 'index']);
 Route::get('/greatmanageds', [GreatmanagedController::class, 'index']);
