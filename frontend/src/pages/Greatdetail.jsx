@@ -57,20 +57,16 @@ const GreatDetail = () => {
                     <div className="event">
                       {person.year} {person.event}
                     </div>
-                    <div className="lat">{person.lat}</div>
-                    <div className="lon">{person.lon}</div>
                     <div className="nenpyou-yajirusi">
                       {/* Linkのstateプロパティで緯度経度を渡す */}
                       <Link
-                        to={{
-                          pathname: '/map',
-                          state: {
+                        to="/map"
+                          state={{
                             lat: parseFloat(person.lat),
                             lng: parseFloat(person.lon),
-                          }, // 緯度経度を渡す
                         }}
                       >
-                        <p>&gt;</p>
+                        <p>マップ</p>
                       </Link>
                     </div>
                   </div>
