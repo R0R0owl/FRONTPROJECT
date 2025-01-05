@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const GreatDetail = () => {
   const { personId } = useParams();
+  const { eraId } = useParams();
   const [persons, setPersons] = useState([]);
 
   const url = `http://127.0.0.1:8000/api/event?great_id=${personId}`;
@@ -29,7 +30,7 @@ const GreatDetail = () => {
       <section className="ijin-syousai">
         <div className="page-title">
           <div className="return">
-            <Link to={`/greatdata/${personId}`}>
+            <Link to={`/greatdata/${eraId}`}>
               <img src="/src/assets/img/return.png" alt="偉人一覧画面に戻る" />
             </Link>
           </div>
