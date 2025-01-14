@@ -8,6 +8,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PeriodController;
 use App\Http\Controllers\API\GreatmanagedController;
 use App\Http\Controllers\API\EventController;
+use App\Http\Controllers\API\PromptsController;
 
 //ログインに必要なapi => register login logout
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -24,9 +25,14 @@ Route::get('/list',[ListController::class, 'index']);
 // GETリクエストを処理するルート例
 Route::get('/customer', [CustomerController::class, 'index']);
 
+//人物
 Route::get('/periods', [PeriodController::class, 'index']);
 Route::get('/greatmanageds', [GreatmanagedController::class, 'index']);
 Route::get('/greatmanaged', [GreatManagedController::class, 'getGreatManaged']);
 
+//イベント
 Route::get('/events', [EventController::class, 'index']);
 Route::get('/event', [EventController::class, 'getEvents']);
+
+//プロンプト
+Route::get('/prompts', [PromptsController::class, 'index']);

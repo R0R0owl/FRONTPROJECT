@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { GoogleMap, LoadScriptNext, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScriptNext, Marker, Circle } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100vw',
@@ -17,6 +17,18 @@ const mapOptions = {
   zoomControl: false,
   streetViewControl: false,
   fullscreenControl: false,
+};
+
+const circleOptions = {
+  strokeColor: '#00FF00', // 枠線の色
+  strokeOpacity: 0.5,     // 枠線の透明度
+  strokeWeight: 2,        // 枠線の太さ
+  fillColor: '#00FF00',   // 塗りつぶしの色
+  fillOpacity: 0.2,      // 塗りつぶしの透明度
+  clickable: false,       // 円をクリック不可にする
+  draggable: false,       // 円をドラッグ不可にする
+  editable: false,        // 円のサイズを編集不可にする
+  visible: true,          // 円を表示する
 };
 
 const Map = () => {
@@ -62,7 +74,15 @@ const Map = () => {
           zoom={15}
           options={mapOptions}
         >
+          {/* ピン */}
           <Marker position={{ lat, lng }} />
+
+          {/* 円を描画 */}
+          <Circle
+            center={{ lat, lng }}
+            radius={300} // 半径（メートル単位）
+            options={circleOptions}
+          />
         </GoogleMap>
       </LoadScriptNext>
 
