@@ -16,9 +16,10 @@ class Prompts extends Model
     // 一括代入可能な属性
     protected $fillable = [
         'id',
+        'event_id',
         'prompt',
         'negative_prompt',
-        'step'
+        'step',
     ];
 
     // 隠す属性（JSONシリアル化時）

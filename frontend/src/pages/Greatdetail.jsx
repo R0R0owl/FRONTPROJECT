@@ -4,11 +4,15 @@ import axios from 'axios';
 
 const GreatDetail = () => {
   const { personId } = useParams();
+  const { eventId } = useParams(); // eventIdを取得
   const { eraId } = useParams();
   const [persons, setPersons] = useState([]);
+  const [eventData, setEventData] = useState(null); // eventDataを格納するステート
 
   const url = `http://127.0.0.1:8000/api/event?great_id=${personId}`;
+  const prompturl = `http://127.0.0.1:8000/api/prompt?event_id=${eventId}`;
 
+  // personIdに基づいてデータを取得
   useEffect(() => {
     (async () => {
       try {
@@ -24,6 +28,21 @@ const GreatDetail = () => {
       }
     })();
   }, [personId]);
+
+  // eventIdに基づいてデータを取得
+  useEffect(() => {
+    if (eventId) {
+      (async () => {
+        try {
+          const response = await axios.get(prompturl);
+          setEventData(response.data); // eventIdに関連するデータを保存
+        } catch (error) {
+          console.log('Error fetching event data:', error);
+          setEventData(null);
+        }
+      })();
+    }
+  }, [eventId]);
 
   return (
     <main>
@@ -61,10 +80,10 @@ const GreatDetail = () => {
                     <div className="nenpyou-yajirusi">
                       {/* Linkのstateプロパティで緯度経度を渡す */}
                       <Link
-                        to="/map"
-                          state={{
-                            lat: parseFloat(person.lat),
-                            lng: parseFloat(person.lon),
+                        to={`/map/${person.id}/${person.eventId}`} // eventIdを渡す
+                        state={{
+                          lat: parseFloat(person.lat),
+                          lng: parseFloat(person.lon),
                         }}
                       >
                         <p>マップ</p>

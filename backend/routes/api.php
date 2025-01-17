@@ -14,6 +14,7 @@ use App\Http\Controllers\API\PromptsController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
@@ -36,3 +37,4 @@ Route::get('/event', [EventController::class, 'getEvents']);
 
 //プロンプト
 Route::get('/prompts', [PromptsController::class, 'index']);
+Route::get('/prompt', [PromptsController::class, 'getPrompt']);

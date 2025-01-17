@@ -1,6 +1,8 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { GoogleMap, LoadScriptNext, Marker, Circle } from '@react-google-maps/api';
+import axios from 'axios';
+
 
 const containerStyle = {
   width: '100vw',
@@ -32,19 +34,45 @@ const circleOptions = {
 };
 
 const Map = () => {
+  const { eventId } = useParams();
+  const [ prompts, setPrompts ] = useState([]);
+  const url = `http://127.0.0.1:8000/api/prompt?event_id=${eventId}`;
   const location = useLocation();
   const navigate = useNavigate();
   console.log('Location state:', location.state);
 
   const { lat, lng } = location.state || defaultLocation;
 
+  //urlからデータ取得
+  const fetchPrompts = async () => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setPrompts(data);
+      console.log(data);
+    } catch (error) {
+      console.error('データ取得エラー:', error);
+    }
+  };
+
+  //レンダリング時にデータ取得
+  useEffect(() => {
+    fetchPrompts();
+  }, [url]);
+
   // API送信ハンドラ
   const handleSubmit = async () => {
-    const apiUrl = 'https://example.com/api/submit'; // APIのエンドポイント
-    const payload = { lat, lng }; // 送信するデータ
+    const postUrl = 'http://10.42.112.8:32766/sdapi/v1/txt2img';
+    const payload = prompts.map((prompt) => ({
+      prompt: prompt.prompt,
+      negative_prompt: prompt.negative_prompt
+    }));
 
     try {
-      const response = await fetch(apiUrl, {
+      const response = await fetch(postUrl, {
         method: 'POST', // HTTPメソッド
         headers: {
           'Content-Type': 'application/json', // JSON形式のデータを送信
@@ -56,7 +84,7 @@ const Map = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
+      const data = await response.json();                                                                                                                                                                                       
       console.log('APIレスポンス:', data);
       alert('データが送信されました！');
     } catch (error) {
@@ -80,13 +108,13 @@ const Map = () => {
           {/* 円を描画 */}
           <Circle
             center={{ lat, lng }}
-            radius={300} // 半径（メートル単位）
+            radius={300} // 半径（メートル単位）                                                                                                                                                                                                                                
             options={circleOptions}
           />
         </GoogleMap>
       </LoadScriptNext>
-
-      {/* 戻るボタン */}
+                                                                                                                                                                             
+      {/* 戻るボタン */}                                                                                                                                                                                                                   
       <button
         onClick={() => navigate(-1)}
         style={{

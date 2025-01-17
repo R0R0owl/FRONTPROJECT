@@ -34,7 +34,7 @@ const App = () => {
     { path: "/greatlist", element: <Greatlist /> },
     { path: "/greatdata/:eraId", element: <Greatdata /> },
     { path: "/greatdetail/:eraId/:personId", element: <Greatdetail /> },
-    { path: "/map", element: <Map /> },
+    { path: "/map/:personId/:eventId", element: <Map /> },
 
     // エラーページ
     { path: "*", element: <div>ページが見つかりません</div> },
