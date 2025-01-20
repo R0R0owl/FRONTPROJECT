@@ -4,13 +4,11 @@ import axios from 'axios';
 
 const GreatDetail = () => {
   const { personId } = useParams();
-  const { eventId } = useParams(); // eventIdを取得
   const { eraId } = useParams();
   const [persons, setPersons] = useState([]);
-  const [eventData, setEventData] = useState(null); // eventDataを格納するステート
+  const [eventData, setEventData] = useState({}); // person.id ごとのデータを格納
 
   const url = `http://127.0.0.1:8000/api/event?great_id=${personId}`;
-  const prompturl = `http://127.0.0.1:8000/api/prompt?event_id=${eventId}`;
 
   // personIdに基づいてデータを取得
   useEffect(() => {
@@ -29,20 +27,25 @@ const GreatDetail = () => {
     })();
   }, [personId]);
 
-  // eventIdに基づいてデータを取得
+  // persons のデータが変更されたときに、prompturl を呼び出す
   useEffect(() => {
-    if (eventId) {
-      (async () => {
+    const fetchPromptData = async () => {
+      const newEventData = {};
+      for (const person of persons) {
         try {
-          const response = await axios.get(prompturl);
-          setEventData(response.data); // eventIdに関連するデータを保存
+          const response = await axios.get(`http://127.0.0.1:8000/api/prompt?prompt_id=${person.id}`);
+          newEventData[person.id] = response.data; // person.id に基づいたデータを保存
         } catch (error) {
-          console.log('Error fetching event data:', error);
-          setEventData(null);
+          console.log(`Error fetching data for person ${person.id}:`, error);
         }
-      })();
+      }
+      setEventData(newEventData);
+    };
+
+    if (persons.length > 0) {
+      fetchPromptData();
     }
-  }, [eventId]);
+  }, [persons]);
 
   return (
     <main>
@@ -80,10 +83,11 @@ const GreatDetail = () => {
                     <div className="nenpyou-yajirusi">
                       {/* Linkのstateプロパティで緯度経度を渡す */}
                       <Link
-                        to={`/map/${person.id}/${person.eventId}`} // eventIdを渡す
+                        to={`/map/${person.id}/${person.id}`} // person.id を利用
                         state={{
                           lat: parseFloat(person.lat),
                           lng: parseFloat(person.lon),
+                          promptData: eventData[person.id], // promptデータを渡す
                         }}
                       >
                         <p>マップ</p>

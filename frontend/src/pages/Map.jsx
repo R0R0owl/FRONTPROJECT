@@ -36,12 +36,17 @@ const circleOptions = {
 const Map = () => {
   const { eventId } = useParams();
   const [ prompts, setPrompts ] = useState([]);
-  const url = `http://127.0.0.1:8000/api/prompt?event_id=${eventId}`;
+  const url = `http://127.0.0.1:8000/api/prompt?prompt_id=${eventId}`;
   const location = useLocation();
   const navigate = useNavigate();
   console.log('Location state:', location.state);
 
   const { lat, lng } = location.state || defaultLocation;
+
+    //レンダリング時にデータ取得
+    useEffect(() => {
+      fetchPrompts();
+    }, [url]);
 
   //urlからデータ取得
   const fetchPrompts = async () => {
@@ -51,40 +56,40 @@ const Map = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      setPrompts(data);
+      setPrompts(data.prompts || []); // 必要に応じて適切なプロパティを確認
       console.log(data);
     } catch (error) {
       console.error('データ取得エラー:', error);
+      setPrompts([]); // エラー時に初期化
     }
   };
-
-  //レンダリング時にデータ取得
-  useEffect(() => {
-    fetchPrompts();
-  }, [url]);
-
-  // API送信ハンドラ
+  
   const handleSubmit = async () => {
+    if (!Array.isArray(prompts)) {
+      console.error('prompts is not an array:', prompts);
+      return;
+    }
+  
     const postUrl = 'http://10.42.112.8:32766/sdapi/v1/txt2img';
     const payload = prompts.map((prompt) => ({
       prompt: prompt.prompt,
-      negative_prompt: prompt.negative_prompt
+      negative_prompt: prompt.negative_prompt,
     }));
-
+  
     try {
       const response = await fetch(postUrl, {
-        method: 'POST', // HTTPメソッド
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // JSON形式のデータを送信
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload), // データを文字列に変換
+        body: JSON.stringify(payload),
       });
-
+  
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      const data = await response.json();                                                                                                                                                                                       
+  
+      const data = await response.json();
       console.log('APIレスポンス:', data);
       alert('データが送信されました！');
     } catch (error) {
@@ -101,9 +106,7 @@ const Map = () => {
           center={{ lat, lng }}
           zoom={15}
           options={mapOptions}
-        >
-          {/* ピン */}
-          <Marker position={{ lat, lng }} />
+        >  
 
           {/* 円を描画 */}
           <Circle
@@ -111,6 +114,8 @@ const Map = () => {
             radius={300} // 半径（メートル単位）                                                                                                                                                                                                                                
             options={circleOptions}
           />
+
+          <Marker position={{ lat, lng }} />
         </GoogleMap>
       </LoadScriptNext>
                                                                                                                                                                              
