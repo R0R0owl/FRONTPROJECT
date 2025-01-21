@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { GoogleMap, LoadScriptNext, Marker, Circle } from '@react-google-maps/api';
+import { GoogleMap, LoadScriptNext, Marker, Circle, MarkerF, CircleF } from '@react-google-maps/api';
 import axios from 'axios';
 
 
@@ -107,15 +107,13 @@ const Map = () => {
           zoom={15}
           options={mapOptions}
         >  
+        <MarkerF position={{ lat, lng }} />
 
-          {/* 円を描画 */}
-          <Circle
-            center={{ lat, lng }}
-            radius={300} // 半径（メートル単位）                                                                                                                                                                                                                                
-            options={circleOptions}
-          />
-
-          <Marker position={{ lat, lng }} />
+        <CircleF
+          center={{ lat, lng }}
+          radius={300}                                                                                                                                                                                                                              
+          options={circleOptions}
+        />
         </GoogleMap>
       </LoadScriptNext>
                                                                                                                                                                              
