@@ -37,7 +37,7 @@ const Map = () => {
   const { eventId } = useParams();
   const [ prompts, setPrompts ] = useState([]);
   const [ images, setImages ] = useState([]);
-  const [ispopupOpen, setIsPopupOpen] = useState([false]);
+  const [ispopupOpen, setIsPopupOpen] = useState(false);
   const url = `http://127.0.0.1:8000/api/prompt?prompt_id=${eventId}`;
   const location = useLocation();
   const navigate = useNavigate();
@@ -57,8 +57,9 @@ const Map = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+
       const data = await response.json();
-      setPrompts(data.prompt || []); // 必要に応じて適切なプロパティを確認
+      setPrompts(data); // 必要に応じて適切なプロパティを確認
       console.log('プロンプト:', data);
     } catch (error) {
       console.error('データ取得エラー:', error);
@@ -73,6 +74,7 @@ const Map = () => {
     }
   
     const postUrl = 'http://10.42.112.8:32766/sdapi/v1/txt2img';
+    
     const payload = prompts.map((prompt) => ({
       prompt: prompt.prompt,
       negative_prompt: prompt.negative_prompt,

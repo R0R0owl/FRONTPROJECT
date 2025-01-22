@@ -9,6 +9,7 @@ use App\Http\Controllers\API\PeriodController;
 use App\Http\Controllers\API\GreatmanagedController;
 use App\Http\Controllers\API\EventController;
 use App\Http\Controllers\API\PromptsController;
+use App\Http\Controllers\API\ImageController;
 
 //ログインに必要なapi => register login logout
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -38,3 +39,7 @@ Route::get('/event', [EventController::class, 'getEvents']);
 //プロンプト
 Route::get('/prompts', [PromptsController::class, 'index']);
 Route::get('/prompt', [PromptsController::class, 'getPrompt']);
+
+//イラスト
+Route::get('/images', [ImageController::class, 'index']);
+Route::post('/postimage', [ImageController::class, 'create']);
