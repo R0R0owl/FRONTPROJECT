@@ -26,5 +26,9 @@ class ImageController extends Controller
         $validated = $request->validate([
             'image_base' => 'required|max:4000',
         ]);
+
+        foreach ($validated['image_base'] as $base64Image) {
+            $imageData = base64_decode($base64Image)
+        }
     }
 }
