@@ -59,7 +59,7 @@ const Map = () => {
       }
 
       const data = await response.json();
-      setPrompts(data); // 必要に応じて適切なプロパティを確認
+      setPrompts(data.post); // 必要に応じて適切なプロパティを確認
       console.log('プロンプト:', data);
     } catch (error) {
       console.error('データ取得エラー:', error);
@@ -73,13 +73,13 @@ const Map = () => {
       return;
     }
   
-    const postUrl = 'http://10.42.112.8:32766/sdapi/v1/txt2img';
-    
-    const payload = prompts.map((prompt) => ({
-      prompt: prompt.prompt,
-      negative_prompt: prompt.negative_prompt,
-      steps: prompt.steps,
-    }));
+    const postUrl = 'http://www.jz.jec.ac.jp/createimg/sdapi/v1/txt2img';
+  
+    // prompts配列の最初の要素を使用してpayloadを構築
+    const payload = {
+      prompt: prompts[0]?.prompt || "Default prompt", // デフォルト値を設定
+      steps: prompts[0]?.steps || 5, // デフォルトのステップ数
+    };
   
     try {
       const response = await fetch(postUrl, {
@@ -87,7 +87,7 @@ const Map = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ data: payload }),
+        body: JSON.stringify(payload), // 単一オブジェクトを送信
       });
   
       if (!response.ok) {
@@ -98,7 +98,6 @@ const Map = () => {
       console.log('APIレスポンス:', data);
       setImages(data.images || []);
       setIsPopupOpen(true);
-      console.log('ペイロード:', payload);
       alert('データが送信されました！');
     } catch (error) {
       console.error('API送信エラー:', error);

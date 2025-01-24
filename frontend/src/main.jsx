@@ -8,7 +8,7 @@ import App from './App.jsx'; // メインコンポーネントをインポート
 const root = createRoot(document.getElementById('root')); // createRoot を使用
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/FrontLaravel/frontend">
       <App />
     </BrowserRouter>
   </React.StrictMode>
