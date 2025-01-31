@@ -53,7 +53,7 @@ const GreatDetail = () => {
         <div className="page-title">
           <div className="return">
             <Link to={`/greatdata/${eraId}`}>
-              <img src="/src/assets/img/return.png" alt="偉人一覧画面に戻る" />
+              <img src="src/assets/img/return.png" alt="偉人一覧画面に戻る" />
             </Link>
           </div>
           <h2 id="page-title">イベント一覧</h2>
