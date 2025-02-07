@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from 'axios';
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
-import titleImg from '../assets/img/title.png';
+import titleImg from '../assets/img/title-background.png';
 
 function Login() {
 
@@ -45,47 +45,52 @@ function Login() {
     }
 
     return (
-        <main>
-            <div className="new-title-section">
-                <div className="title-background">
-                    <div className="title-box">
-                        <div className="title">
-                            <img src={titleImg} id="title" alt="title" />
-                        </div>
-                    </div>
+        <div>
+            <header>
+                <div className="above-line"></div>
+                <div className="above-doubleline"></div>
+            </header>
+            
+            <main>
+                <div className="title">
+                    <img src={titleImg} id="title-logo" alt="title-logo" />
                 </div>
-            </div>
 
-            <div className="login-container">
-                <form onSubmit={loginSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="mail-address" id="mail">メールアドレス</label><br />
-                        <input type="email" id="mail-address" name="email" onChange={handleInput} value={loginInput.email} className="form-control" required /><br />
-                        <span>{loginInput.error_list.email}</span>
-                    </div>
+                <div className="login-container">
+                    <form onSubmit={loginSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="mail-address" id="mail">メールアドレス</label><br />
+                            <input type="email" id="mail-address" name="email" onChange={handleInput} value={loginInput.email} className="form-control" required /><br />
+                            <span>{loginInput.error_list.email}</span>
+                        </div>
 
-                    <div className="form-group">
-                        <label htmlFor="password" id="pass">パスワード</label><br />
-                        <input type="password" id="password" name="password" onChange={handleInput} value={loginInput.password} className="form-control" required />
-                        <span>{loginInput.error_list.password}</span>
-                    </div>
+                        <div className="form-group">
+                            <label htmlFor="password" id="pass">パスワード</label><br />
+                            <input type="password" id="password" name="password" onChange={handleInput} value={loginInput.password} className="form-control" required />
+                            <span>{loginInput.error_list.password}</span>
+                        </div>
 
-                    <div className="login">
-                        <button id="login" type="submit">ログイン</button>
-                    </div>
-                </form>
-            </div>
+                        <div className="login">
+                            <button id="login" type="submit">ログイン</button>
+                        </div>
+                    </form>
+                </div>
 
-            <div className="sinki-container">
-                <button
-                    id="sinki"
-                    type="button"
-                    onClick={() => navigate('/register')}  // 新規登録ページへ遷移
-                >
-                    新規登録
-                </button>
-            </div>
-        </main>
+                <div className="sinki-container">
+                    <button
+                        id="sinki"
+                        type="button"
+                        onClick={() => navigate('/register')}  // 新規登録ページへ遷移
+                    >
+                        ユーザ登録
+                    </button>
+                </div>
+            </main>
+            <footer id="old-footer">
+                <div className="bottom-doubleline"></div>
+                <div className="bottom-line"></div>
+            </footer>
+        </div>
     );
 }
 

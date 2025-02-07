@@ -44,21 +44,26 @@ function Register() {
     };
 
     return (
-        <main>
-            <section className="sinkitouroku">
+        <div>
+            <header>
+                <div className="above-line"></div>
+                <div className="above-doubleline"></div>
+            </header>
+        
+            <main>
                 <div className="page-title">
                     <div className="return">
                         <Link to="/login">
                             <img src={returnImg} alt="return" />
                         </Link>
                     </div>
-                    <h2 id="page-title">新規登録</h2>
+                    <h2 id="page-title">ユーザ登録</h2>
                 </div>
 
-                <div id="tourokujouhou">
+                <div id="register-info">
                     <form onSubmit={registerSubmit}>
-                        <div className="tourokujouhou">
-                            <label htmlFor="username" id="touroku-name">ユーザネーム</label><br />
+                        <div className="register-info">
+                            <label htmlFor="username" id="register-name">ユーザネーム</label><br />
                             <input
                                 type="text"
                                 id="username"
@@ -70,8 +75,8 @@ function Register() {
                             /><br />
                             <span>{registerInput.error_list.name}</span>
                         </div>
-                        <div className="tourokujouhou">
-                            <label htmlFor="email" id="touroku-mail">メールアドレス</label><br />
+                        <div className="register-info">
+                            <label htmlFor="email" id="register-mail">メールアドレス</label><br />
                             <input
                                 type="email"
                                 id="email"
@@ -83,8 +88,8 @@ function Register() {
                             /><br />
                             <span>{registerInput.error_list.email}</span>
                         </div>
-                        <div className="tourokujouhou">
-                            <label htmlFor="password" id="touroku-pass">パスワード</label><br />
+                        <div className="register-info">
+                            <label htmlFor="password" id="register-pass">パスワード</label><br />
                             <input
                                 type="password"
                                 id="password"
@@ -96,27 +101,32 @@ function Register() {
                             /><br />
                             <span>{registerInput.error_list.password}</span>
                         </div>
-                        {/* <div className="tourokujouhou">
-                            <label htmlFor="confirmPassword" id="kakunin-pass">パスワード(確認)</label><br />
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                name="passwordconfirm"
-                                onChange={handleInput}
-                                value={registerInput.passwordconfirm}
-                                className="form-control"
-                                required
-                            /><br />
-                            <span>{registerInput.error_list.passwordconfirm}</span>
-                        </div> */}
+                            {/* <div className="register-info">
+                                <label htmlFor="confirmPassword" id="kakunin-pass">パスワード(確認)</label><br />
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="passwordconfirm"
+                                    onChange={handleInput}
+                                    value={registerInput.passwordconfirm}
+                                    className="form-control"
+                                    required
+                                /><br />
+                                <span>{registerInput.error_list.passwordconfirm}</span>
+                            </div> */}
 
-                        <div className="touroku">
-                            <button type="submit" id="touroku">新規作成</button>
+                        <div className="registration">
+                            <button type="submit" id="registration">ユーザ作成</button>
                         </div>
                     </form>
                 </div>
-            </section>
-        </main>
+            </main>
+
+            <footer id="old-footer">
+                <div className="bottom-doubleline"></div>
+                <div className="bottom-line"></div>
+            </footer>
+        </div>
     );
 }
 

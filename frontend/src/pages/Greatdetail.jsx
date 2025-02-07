@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import Return from '/src/assets/img/return.png';
+import down from '/src/assets/img/down.png';
 
 const GreatDetail = () => {
   const { personId } = useParams();
+  const { eventId } = useParams(); // eventIdを取得
   const { eraId } = useParams();
   const [persons, setPersons] = useState([]);
-  const [eventData, setEventData] = useState({}); // person.id ごとのデータを格納
+  const [eventData, setEventData] = useState(null); // eventDataを格納するステート
+  const [visibleDetails, setVisibleDetails] = useState({}); // 各イベントの開閉状態を管理
 
   const url = `http://127.0.0.1:8000/api/event?great_id=${personId}`;
+  const prompturl = `http://127.0.0.1:8000/api/prompt?event_id=${eventId}`;
 
   // personIdに基づいてデータを取得
   useEffect(() => {
@@ -27,33 +32,28 @@ const GreatDetail = () => {
     })();
   }, [personId]);
 
-  // persons のデータが変更されたときに、prompturl を呼び出す
+  // eventIdに基づいてデータを取得
   useEffect(() => {
-    const fetchPromptData = async () => {
-      const newEventData = {};
-      for (const person of persons) {
+    if (eventId) {
+      (async () => {
         try {
-          const response = await axios.get(`http://127.0.0.1:8000/api/prompt?prompt_id=${person.id}`);
-          newEventData[person.id] = response.data; // person.id に基づいたデータを保存
+          const response = await axios.get(prompturl);
+          setEventData(response.data); // eventIdに関連するデータを保存
         } catch (error) {
-          console.log(`Error fetching data for person ${person.id}:`, error);
+          console.log('Error fetching event data:', error);
+          setEventData(null);
         }
-      }
-      setEventData(newEventData);
-    };
-
-    if (persons.length > 0) {
-      fetchPromptData();
+      })();
     }
-  }, [persons]);
+  }, [eventId]);
 
   return (
     <main>
-      <section className="ijin-syousai">
+      <section className="Greatdetail">
         <div className="page-title">
           <div className="return">
             <Link to={`/greatdata/${eraId}`}>
-              <img src="src/assets/img/return.png" alt="偉人一覧画面に戻る" />
+              <img src={Return} alt="偉人一覧画面に戻る" />
             </Link>
           </div>
           <h2 id="page-title">イベント一覧</h2>
@@ -68,29 +68,36 @@ const GreatDetail = () => {
                     <img src={person.imageUrl} alt={`${person.name}の画像`} />
                   </div>
                   <div className="ijin-description">
+                    <h2>{person.name}</h2>
                     <p>{person.description}</p>
                   </div>
                 </div>
 
                 <div className="nenpyou-itiran">
                   <div className="nenpyou">
-                    <div className="clear-mark">
-                      {person.year === '1534年' ? '★' : ''}
-                    </div>
-                    <div className="event">
-                      {person.year} {person.event}
+                    <div className='timeline-info'>
+                      <div className="clear-mark">
+                        {person.year === '1534年' ? '★' : ''}
+                      </div>
+                      <div className="event">
+                        {person.year} {person.name}
+                      </div>
                     </div>
                     <div className="nenpyou-yajirusi">
+                      <img src={down} className='down' alt="イベント詳細表示" />
+                    </div>
+                    <div className='event-detail'>
+                      <p>{person.event}</p>
                       {/* Linkのstateプロパティで緯度経度を渡す */}
                       <Link
-                        to={`/map/${person.id}/${person.id}`} // person.id を利用
+                        to={`/map/${person.id}/${person.eventId}`} // eventIdを渡す
                         state={{
                           lat: parseFloat(person.lat),
                           lng: parseFloat(person.lon),
-                          promptData: eventData[person.id], // promptデータを渡す
                         }}
+                        className='map-arrow'
                       >
-                        <p>マップ</p>
+                        <p>map➡</p>
                       </Link>
                     </div>
                   </div>

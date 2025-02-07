@@ -1,161 +1,83 @@
 @charset "utf-8";
-@font-face {
-    font-family: 'DefaultFont';
-    src: url('../fonts/NikkyouSans-mLKax.ttf') format('truetype');
-}
-
 
 /* 基本設定 */
 
 body {
-    background-image: url(../img/background.png);
-    font-family: 'DefaultFont';
-    /* font-weight: bold; */
-    color: #F39731;
-    text-shadow: 
-    1px 1px 0px #787878,
-    -1px -1px 0px #787878,
-    1px -1px 0px #787878,
-    -1px 1px 0px #787878;
-    letter-spacing: 1px;
+    background-image: url(../img/haikei2.jpg);
+    font-family: Arial, Helvetica, sans-serif;
+    color: #867666;
     margin: 0;
     padding: 0;
 }
 
-
-/* header */
-
-header {
-    padding-bottom: 20px;
-}
-
-.above-line {
-    background-color: #b7b7b7;
-    padding: 15px;
-    margin-bottom: 10px;
-}
-
-.above-doubleline {
-    background-color: #F39731;
-    opacity: 0.6;
-    padding: 5px;
-}
-
-
-/* new header */
-
-.new-above-line {
-    background-color: #b7b7b7;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.new-above-line img {
-    width: 150px;
-    margin-left: 10px;
-}
-
-.user-menu img {
-    width: 40px;
-    margin: 5px 0 0 0;
-}
-
-.user-menu {
-    text-align: center;
-    margin-right: 5px;
-}
-
-.user-name {
-    position: relative;
-}
-
-.user-name img {
-    position: relative;
-    width: 200px;
-    margin: 0;
-    padding: 0;
-    transform: rotate(180deg);
-}
-
-.user-name p {
-    position: absolute;
-    margin: 0;
-    top: 50%;
-    left: 50%;
-    font-size: 1.1em;
-    transform: translate(-50%, -50%);
-}
-
-
-/* footer */
-
-#old-footer {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    padding-top: 20px;
-}
-
-#new-footer {
-    flex: 1;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    padding-top: 20px;
-}
-
-.bottom-line {
-    background-color: #b7b7b7;
-    padding: 15px;
-    margin-top: 10px;
-}
-
-.bottom-doubleline {
-    background-color: #F39731;
-    opacity: 0.6;
-    padding: 5px;
-}
-
-
-/* title */
-
-.title {
-    text-align: center;
-    margin: 60px 0 20px 0;
+.title-background {
+    background-image: url(../img/haikei2.jpg);
+    border: 5px solid #867666;
+    width: 80%;
+    margin: 0 auto;
+    padding: 25px 25px;
 }
 
 .title-box {
     position: relative;
 }
 
-#title-logo {
-    width: 400px;
+.title {
+    padding: 3em;
+    justify-content: center;
 }
 
+#title {
+    width: 200px;
+    padding-left: 10px;
+}
 
-/* return */
+.title-box:before,
+.title-box:after {
+    content: "";
+    width: 4em;
+    height: 4em;
+    position: absolute;
+}
+
+.title-box::before {
+    border-top: 2px solid #867666;
+    border-left: 2px solid #E1B80D;
+}
+
+.title-box::after {
+    border-bottom: 2px solid #867666;
+    border-right: 2px solid #E1B80D;
+    right: 0;
+    bottom: 0;
+}
+
+.title-box h1 {
+    color: #867666;
+    text-align: center;
+    margin: 0 auto;
+    
+}
+  
+.title-box h1:first-letter {
+    font-size: 1.4em;
+    color: #E1B80D;
+}
 
 .return {
     margin: 30px 20px 0 0;
 }
 
 .return img {
-    width: 23px;
+    width: 25px;
 }
 
-
-/* page title */
-
 .page-title {
-    background-color: rgba(255, 255, 255, 0.8);
     display: flex;
     padding: 0 0 0 20px;
     margin: 60px 20px;
-    border-top: 5px solid #787878;
-    border-bottom: 5px solid #787878;
-    letter-spacing: 3px;
+    border-top: 5px solid #867666;
+    border-bottom: 5px solid #867666;
 }
 
 #page-title {
@@ -165,8 +87,7 @@ header {
 
 .page-title h2:first-letter {
     font-size: 1.4em;
-    color: #787878;
-    text-shadow: none;
+    color: #867666;
 }
 
 
@@ -177,36 +98,26 @@ header {
     font-size: 1.5em;
 }
 
-#mail,
+#mail {
+    padding: 5px 20px;
+    border-bottom: 1px solid #867666;
+}
+
+#mail-address {
+    margin: 20px 0;
+}
+
 #pass {
     padding: 5px 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid #787878;
-    border-radius: 20px;
+    border-bottom: 1px solid #867666;
 }
 
-#mail-address,
 #password {
     margin: 20px 0;
-    padding: 5px;
-    font-size: 19.2px;
-    color: #4c4c4c;
 }
 
-#login,
-#sinki {
-    border: none;
-    width: 30%;
-    padding: 12px;
-    font-size: 1.2em;
-    background-color: rgba(243, 151, 49, 0.8);
-    color: #ffffff;
-    border-radius: 5px;
-}
-
-#login:hover,
-#sinki:hover {
-    background-color: rgba(243, 151, 49, 1);
+.error-message {
+    text-align: center;
 }
 
 .login {
@@ -214,265 +125,214 @@ header {
     margin: 30px 0;
 }
 
+#login {
+    border: none;
+    width: 30%;
+    padding: 12px;
+    font-size: 1.2em;
+    background-color: #867666;
+    color: #EAE2D6;
+    border-radius: 5px;
+}
+
+#sinki {
+    border: none;
+    width: 30%;
+    padding: 12px;
+    font-size: 1.2em;
+    background-color: #867666;
+    color: #EAE2D6;
+    border-radius: 5px;
+}
+
 .sinki-container {
     text-align: center;
-    padding-bottom: 60px;
 }
 
 
 /* sinkitouroku page */
 
-#register-info {
+.sinkitouroku {
+    margin: 150px 0 20px 0;
+}
+
+#tourokujouhou {
     text-align: center;
     font-size: 1.5em;
 }
 
-#register-name,
-#register-mail,
-#register-pass,
+#touroku-name,
+#touroku-mail,
+#touroku-pass,
 #kakunin-pass {
     padding: 5px 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid #787878;
-    border-radius: 20px;
+    border-bottom: 1px solid #867666;
 }
 
 #username,
 #email,
 #password,
-#kakunin-password {
+#confirmPassword {
     margin: 20px 0;
-    padding: 5px;
-    font-size: 19.2px;
-    color: #4c4c4c;
 }
 
-.registration {
+.error {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.touroku {
     margin: 30px 0;
 }
 
-#registration {
+#touroku {
     border: none;
     width: 30%;
     padding: 12px;
     font-size: 19.2px;
-    background-color: rgba(243, 151, 49, 0.8);
-    color: #ffffff;
+    background-color: #867666;
+    color: #EAE2D6;
     border-radius: 5px;
-}
-
-#registration:hover {
-    background-color: rgba(243, 151, 49, 1);
 }
 
 
 /* newtop page */
 
-.balloon {
-    display: inline-block;
+.new-title-section {
+    margin: 150px 20px 80px 20px;
+}
+
+.main-menu-back {
+    margin: 80px 20px 0 20px;
+    padding: 40px 0;
+}
+
+#ijin-button,
+#irasuto-button,
+#quiz-button,
+#henkan-button {
     width: 100%;
-    position: relative;
-    font-size: 3.5em;
-    color: #F39731;
+    border: none;
+    padding: 20px;
+    font-size: 19.2px;
+    background-color: #867666;
+    color: #EAE2D6;
+    border-radius: 5px;
 }
 
-.balloon:nth-child(even) {
-    text-align: right;
-    color: #F39731;
-}
-
-.no-decoration {
-    text-decoration: none;
-    color: #F39731;
-}
-
-.click-button {
-    width: 250px;
-    display: inline-block;
-    position: relative;
-}
-
-.balloon-container {
-    position: relative;
-    display: inline-block;
-}
-
-.char {
-    position: absolute;
-    margin: 0;
-    top: 33%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.balloon:nth-child(even) .char {
-    width: 100%;
+.ijin-button,
+.irasuto-button,
+.quiz-button,
+.henkan-button {
     text-align: center;
+    margin-bottom: 10px;
 }
 
 
-/* Greatlist page */
+/* ijinitiran page */
 
 .era-item {
     display: flex;
-    justify-content: space-between;
-    font-size: 1.3em;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid #787878;
-    border-radius: 20px;
-    margin: 20px;
-    letter-spacing: 3px;
+    justify-content: center;
+    font-size: 19.2px;
+}
+
+.era-progress {
+    width: 20%;
 }
 
 .era-name {
-    width: 80%;
+    width: 40%;
     text-align: center;
 }
 
 .era-arrow {
     width: 20%;
-    margin: 1.2em;
-}
-
-.era-arrow {
-    width: 15px;
+    text-align: right;
 }
 
 .next-link {
     text-decoration: none;
-    color: #787878;
+    color: #867666;
 }
 
 
-/* Greatdata page */
+/* ijinitiran2 page */
 
 .ijin-item {
     display: flex;
     justify-content: center;
-    font-size: 1.3em;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid #787878;
-    border-radius: 20px;
-    margin: 20px;
-    letter-spacing: 3px;
+    font-size: 19.2px;
+}
+
+.ijin-progress {
+    width: 20%;
 }
 
 .ijin-name {
-    width: 80%;
+    width: 40%;
     text-align: center;
 }
 
 .ijin-arrow {
     width: 20%;
-    margin: 1.2em 0;
-}
-
-.ijin-arrow img {
-    width: 15px;
+    text-align: right;
 }
 
 .next-link {
     text-decoration: none;
-    color: #787878;
+    color: #867666;
 }
 
 
-/* Greatdetail page */
+/* ijinsyousai page */
 
 .syousai-jouhou {
-    padding: 36px 30px 20px 30px;
+    padding: 36px 40px 20px 40px;
     margin: 0 20px;
-    background-color: rgba(255, 255, 255, 0.8);
     border: 2px solid #867666;
     text-align: center;
 }
 
-.ijin-description h2 {
-    margin: 10px 0;
-}
-
-.ijin-description p {
+.ijin-description {
     text-align: left;
-    margin: 10px 20px;
-    color: #787878;
-    text-shadow: none;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-size: 1em;
 }
 
 .nenpyou-itiran {
     margin: 20px 0 50px 0;
 }
 
-.nenpyou {
+.nenpyou1,
+.nenpyou2,
+.nenpyou3,
+.nenpyou4 {
+    display: flex;
     justify-content: center;
-    font-size: 1.3em;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid #787878;
-    border-radius: 20px;
-    margin: 20px;
-    letter-spacing: 3px;
-    position: relative;
+    font-size: 19.2px;
 }
 
-.timeline-info {
-    display: flex;
-    width: 100%;
+.nenpyou1 a,
+.nenpyou2 a,
+.nenpyou3 a,
+.nenpyou4 a {
+    text-decoration: none;
+    color: #867666;
 }
 
 .clear-mark {
-    width: 15%;
-    margin: 1.2em 0 1em 0;
+    width: 18%;
+    margin: 1em 0;
 }
 
 .event {
     margin: 1em 0;
-    width: 70%;
+    width: 44%;
     text-align: center;
-    cursor: pointer;
-}
-
-.event-detail {
-    display: none;
-    margin-top: 10px;
-    font-size: 16px;
-    color: #555;
 }
 
 .nenpyou-yajirusi {
-    position: absolute;
-    left: 86%;
-    top: 1.3em;
-}
-
-.nenpyou-yajirusi img {
-    width: 15px;
-}
-
-.event-detail.visible {
-    display: block;
-    text-shadow: none;
-    justify-content: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    color: #787878;
-    margin: 20px 40px;
-    text-align: center;
-    text-decoration: none;
-    letter-spacing: 1px;
-}
-
-.map-arrow {
-    text-decoration: none;
-    color: #787878;
+    width: 18%;
     text-align: right;
-    font-size: large;
-}
-
-.map-arrow p {
-    border-bottom: 2px solid #787878;
 }
 
 
