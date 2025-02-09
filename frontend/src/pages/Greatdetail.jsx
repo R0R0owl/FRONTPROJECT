@@ -81,24 +81,30 @@ const GreatDetail = () => {
                       </div>
                       <div className="event">
                         {person.year} {person.name}
+                        <Link
+                          to={`/map/${person.id}/${person.eventId}`} // eventIdを渡す
+                          state={{
+                            lat: parseFloat(person.lat),
+                            lng: parseFloat(person.lon),
+                          }}
+                          className='map-arrow'
+                        >
+                          <p>map➡</p>
+                        </Link>
                       </div>
-                    </div>
-                    <div className="nenpyou-yajirusi">
-                      <img src={down} className='down' alt="イベント詳細表示" />
-                    </div>
-                    <div className='event-detail'>
-                      <p>{person.event}</p>
-                      {/* Linkのstateプロパティで緯度経度を渡す */}
-                      <Link
-                        to={`/map/${person.id}/${person.eventId}`} // eventIdを渡す
-                        state={{
-                          lat: parseFloat(person.lat),
-                          lng: parseFloat(person.lon),
-                        }}
-                        className='map-arrow'
-                      >
-                        <p>map➡</p>
-                      </Link>
+                      <div className='event-detail'>
+                        <p>{person.event}</p>
+                        <Link
+                          to={`/map/${person.id}/${person.eventId}`} // eventIdを渡す
+                          state={{
+                            lat: parseFloat(person.lat),
+                            lng: parseFloat(person.lon),
+                          }}
+                          className='map-arrow'
+                        >
+                          <p>map➡</p>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
