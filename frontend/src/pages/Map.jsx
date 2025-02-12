@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { GoogleMap, LoadScriptNext, Marker, Circle } from '@react-google-maps/api';
-import axios from 'axios';
-
 
 const containerStyle = {
   width: '100vw',
@@ -22,21 +20,23 @@ const mapOptions = {
 };
 
 const circleOptions = {
-  strokeColor: '#00FF00', // 枠線の色
-  strokeOpacity: 0.5,     // 枠線の透明度
-  strokeWeight: 2,        // 枠線の太さ
-  fillColor: '#00FF00',   // 塗りつぶしの色
-  fillOpacity: 0.2,      // 塗りつぶしの透明度
-  clickable: false,       // 円をクリック不可にする
-  draggable: false,       // 円をドラッグ不可にする
-  editable: false,        // 円のサイズを編集不可にする
-  visible: true,          // 円を表示する
+  strokeColor: '#00FF00',
+  strokeOpacity: 0.5,
+  strokeWeight: 2,
+  fillColor: '#00FF00',
+  fillOpacity: 0.2,
+  clickable: false,
+  draggable: false,
+  editable: false,
+  visible: true,
 };
 
 const Map = () => {
   const { eventId } = useParams();
-  const [ prompts, setPrompts ] = useState([]);
-  const url = `http://127.0.0.1:8000/api/prompt?event_id=${eventId}`;
+  const [prompts, setPrompts] = useState([]);
+  const [imageSrc, setImageSrc] = useState(null); // 画像URLを保存
+  const [isModalOpen, setIsModalOpen] = useState(false); // モーダルの開閉状態
+  const url = `http://127.0.0.1:8000/api/prompt?id=${eventId}`;
   const location = useLocation();
   const navigate = useNavigate();
   console.log('Location state:', location.state);
@@ -66,31 +66,58 @@ const Map = () => {
   // API送信ハンドラ
   const handleSubmit = async () => {
     const postUrl = 'http://10.42.112.8:32766/sdapi/v1/txt2img';
-    const payload = prompts.map((prompt) => ({
-      prompt: prompt.prompt,
-      negative_prompt: prompt.negative_prompt
+    
+    console.log("送信するデータ:", prompts);
+    
+    // `prompts.post` が配列かどうかチェック
+    if (!prompts || !Array.isArray(prompts.post)) {
+      console.error("Error: prompts.post is not an array", prompts);
+      alert("データの形式が正しくありません。");
+      return;
+    }
+  
+    // 正しい形でデータをマッピング
+    const payload = prompts.post.map((post) => ({
+      prompt: post.prompt,
+      negative_prompt: post.negative_prompt,
     }));
-
+  
+    console.log("送信するペイロード:", payload);
+  
     try {
       const response = await fetch(postUrl, {
         method: 'POST', // HTTPメソッド
         headers: {
           'Content-Type': 'application/json', // JSON形式のデータを送信
         },
-        body: JSON.stringify(payload), // データを文字列に変換
+        body: JSON.stringify(payload[(0)]), // データを文字列に変換
       });
-
+  
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      const data = await response.json();                                                                                                                                                                                       
+  
+      const data = await response.json();
       console.log('APIレスポンス:', data);
+
+      // 画像が返ってきた場合、Base64データをデコードして表示
+      if (data.images && data.images.length > 0) {
+        const base64Image = data.images[0];
+        const imageUrl = `data:image/png;base64,${base64Image}`;
+        setImageSrc(imageUrl); // 画像URLを保存
+        setIsModalOpen(true); // モーダルを開く
+      }
+
       alert('データが送信されました！');
     } catch (error) {
       console.error('API送信エラー:', error);
       alert('データ送信中にエラーが発生しました。');
     }
+  };
+
+  // モーダルを閉じる関数
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -108,13 +135,13 @@ const Map = () => {
           {/* 円を描画 */}
           <Circle
             center={{ lat, lng }}
-            radius={300} // 半径（メートル単位）                                                                                                                                                                                                                                
+            radius={300} // 半径（メートル単位）
             options={circleOptions}
           />
         </GoogleMap>
       </LoadScriptNext>
-                                                                                                                                                                             
-      {/* 戻るボタン */}                                                                                                                                                                                                                   
+
+      {/* 戻るボタン */}
       <button
         onClick={() => navigate(-1)}
         style={{
@@ -154,6 +181,57 @@ const Map = () => {
       >
         イラストを取得！
       </button>
+
+      {/* ポップアップ モーダル */}
+      {isModalOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 2,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: 'white',
+              padding: '20px',
+              borderRadius: '10px',
+              maxWidth: '90%',
+              maxHeight: '80%',
+              overflowY: 'auto',
+            }}
+          >
+            <h3>生成された画像</h3>
+            <img
+              src={imageSrc}
+              alt="生成された画像"
+              style={{ maxWidth: '100%', height: 'auto', marginBottom: '20px' }}
+            />
+            <button
+              onClick={closeModal}
+              style={{
+                padding: '10px 20px',
+                fontSize: '16px',
+                backgroundColor: '#FF5733',
+                color: '#FFF',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                width: '100%',
+              }}
+            >
+              閉じる
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

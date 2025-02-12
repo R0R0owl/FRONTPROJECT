@@ -20,8 +20,8 @@ class PromptsController extends Controller
     }
 
     public function getPrompt(Request $request) {
-        $eventId = $request->query('prompt_id');
-        $data = Prompts::where('prompt_id', $eventId)->get();
+        $eventId = $request->query('id');
+        $data = Prompts::where('id', $eventId)->get();
 
         Log::info('取得したデータ:', ['data' => $eventId]);
 
